@@ -18,35 +18,34 @@ import retrofit2.http.Path;
 public interface RetrofitService {
 
     public static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://sixth-sensor-test.appspot.com/").addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://iot-sixthsensor.appspot.com/").addConverterFactory(GsonConverterFactory.create())
             .client(new OkHttpClient.Builder().addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build())
             .build();
 
-    //로그인
+    // 로그인
     @FormUrlEncoded
     @POST("users/login")
     Call<LoginItem> login (
-            @Field("user_id") String user_id,
+            @Field("userid") String userid,
             @Field("password") String password
     );
 
     //비밀번호 변경
     @FormUrlEncoded
-    @PATCH("users/{user_id}/password/")
+    @PATCH("users/:userid/password")
     Call<PassChItem> password (
-            @Path("user_id") String user_id,
-            @Field("curPwd") String curPwd,
-            @Field("newPwd") String newPwd
+            @Field("userid") String user_id,
+            @Field("password") String password,
+            @Field("newPassword") String newPassword
     );
 
-    // POST방식 (회원가입)
+    // 회원가입
     @FormUrlEncoded // 수정
     @POST("users")
-    Call<JoinItem> users(
+    Call<ResponseBody> users(
+            @Field("userid") String userid,
             @Field("username") String username,
-            @Field("user_id") String user_id,
             @Field("password") String password
     );
-
 
 }

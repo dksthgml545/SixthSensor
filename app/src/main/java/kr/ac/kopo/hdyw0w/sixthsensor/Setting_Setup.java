@@ -34,7 +34,6 @@ public class Setting_Setup extends AppCompatActivity{
                 else
                     str2 = vibratorSwitch.getTextOff().toString();
                 Toast.makeText(getApplicationContext(),"Switch - "+str2, Toast.LENGTH_SHORT).show();
-
             }
         });
     }

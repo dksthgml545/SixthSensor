@@ -1,29 +1,38 @@
 package kr.ac.kopo.hdyw0w.sixthsensor.item;
 
+import android.util.DisplayMetrics;
+
 import com.google.gson.annotations.SerializedName;
 
 public class JoinItem {
 
+    @SerializedName("userid")
+    private String userid;
+
     @SerializedName("username")
     private String username;
 
-    @SerializedName("user_id")
-    private String user_id;
-
     @SerializedName("password")
     private String password;
+
+    @SerializedName("status")
+    private String status;
 
     // Setter
     public void setUsername(String username){
         this.username = username;
     }
 
-    public void setUser_id(String user_id){
-        this.user_id = user_id;
+    public void setUser_id(String userid){
+        this.userid = userid;
     }
 
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
     }
 
     // Getter
@@ -31,12 +40,16 @@ public class JoinItem {
         return username;
     }
 
-    public String getUser_id(){
-        return user_id;
+    public String getUserid(){
+        return userid;
     }
 
     public String getPassword(){
         return password;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
 }

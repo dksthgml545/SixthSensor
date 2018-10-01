@@ -18,6 +18,8 @@ public class NavActivity extends AppCompatActivity {
 
     private Fragment[] fragments;
 
+    private BackPressCloseHandler backPressCloseHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +61,12 @@ public class NavActivity extends AppCompatActivity {
 
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
+
+        backPressCloseHandler = new BackPressCloseHandler(this);
     }
 
     private void initFragments() {
         fragments = new Fragment[3];
-
         fragments[MAP_FRAGMENT] = MapActivity.newInstance();
         fragments[LIST_FRAGMENT] = ListFragment.newInstance();
         fragments[SETT_FRAGMENT] = SettingFragment.newInstance();
@@ -83,7 +86,8 @@ public class NavActivity extends AppCompatActivity {
         if (mOnKeyBackPressedListener != null) {
             mOnKeyBackPressedListener.onBack();
         } else {
-            super.onBackPressed();
+//            super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
         }
     }
 }
