@@ -12,9 +12,8 @@ import android.view.MenuItem;
 
 public class NavActivity extends AppCompatActivity {
 
-    private final int MAP_FRAGMENT = 0;
-    private final int LIST_FRAGMENT = 1;
-    private final int SETT_FRAGMENT = 2;
+    private final int LIST_FRAGMENT = 0;
+    private final int SETT_FRAGMENT = 1;
 
     private Fragment[] fragments;
 
@@ -35,9 +34,6 @@ public class NavActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
-                            case R.id.navigation_map:
-                                selectedFragment = fragments[MAP_FRAGMENT];
-                                break;
                             case R.id.navigation_list:
                                 selectedFragment = fragments[LIST_FRAGMENT];
                                 break;
@@ -66,8 +62,7 @@ public class NavActivity extends AppCompatActivity {
     }
 
     private void initFragments() {
-        fragments = new Fragment[3];
-        fragments[MAP_FRAGMENT] = MapActivity.newInstance();
+        fragments = new Fragment[2];
         fragments[LIST_FRAGMENT] = ListFragment.newInstance();
         fragments[SETT_FRAGMENT] = SettingFragment.newInstance();
     }

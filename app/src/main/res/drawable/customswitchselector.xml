@@ -10,12 +10,12 @@
                 android:width="50dp"
                 android:height="40dp" />
             <stroke
-                android:color="#333"
+                android:color="@color/colorButton"
                 android:width="3dp"
                 />
             <gradient
-                android:startColor="#fde952"
-                android:endColor="#fde952"
+                android:startColor="@color/colorAccent"
+                android:endColor="@color/colorAccent"
                 android:angle="270"
                 />
         </shape>
@@ -30,12 +30,12 @@
             android:width="50dp"
             android:height="40dp" />
         <stroke
-            android:color="#333"
+            android:color="@color/colorButton"
             android:width="3dp"
             />
         <gradient
-            android:startColor="#ccc"
-            android:endColor="#ccc"
+            android:startColor="#d0d0d0"
+            android:endColor="#d0d0d0"
             android:angle="270"
             />
         </shape>

@@ -38,7 +38,7 @@ public class JoinActivity extends AppCompatActivity {
         final EditText passwordConfirm = (EditText) findViewById(R.id.ja_passwordconfirm);
 
         Button btnSubmit = (Button) findViewById(R.id.ja_btnSubmit);
-        Button btnmlogin = (Button) findViewById(R.id.ja_btnlogin);
+        Button btnlogin = (Button) findViewById(R.id.ja_btnlogin);
 
         // 비밀번호 재확인
         passwordConfirm.addTextChangedListener(new TextWatcher() {
@@ -205,7 +205,7 @@ public class JoinActivity extends AppCompatActivity {
         });
 
         // 로그인하기 버튼
-        btnmlogin.setOnClickListener(new Button.OnClickListener() {
+        btnlogin.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View view) {
 

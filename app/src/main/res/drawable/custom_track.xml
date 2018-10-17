@@ -8,8 +8,8 @@
     xmls:useLevel="false"
     >
     <gradient
-        xmls:startColor="#333"
-        xmls:endColor="#333"
+        xmls:startColor="@color/colorButton"
+        xmls:endColor="@color/colorButton"
         />
     <corners
         xmls:radius="3dp"
@@ -19,7 +19,7 @@
         xmls:height="30dp"
         />
     <stroke
-        xmls:color="#333"
+        xmls:color="@color/colorButton"
         xmls:width="5dp"
         />
 </shape>

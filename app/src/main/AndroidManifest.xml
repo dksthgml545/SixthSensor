@@ -25,7 +25,21 @@
         </activity>
         <activity android:name=".JoinActivity" />
         <activity android:name=".ChangePassActivity" android:theme="@style/CustomDialog"/>
-        <activity android:name=".AddGroupAtivity" />
+        <activity android:name=".AddPlaceActivity" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+
+        </activity>
+        <activity android:name=".AddArduinoActivity" android:theme="@style/CustomDialog" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
     </application>
 
 </manifest>
