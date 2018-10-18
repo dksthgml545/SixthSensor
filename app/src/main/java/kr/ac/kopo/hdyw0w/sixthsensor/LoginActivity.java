@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (item.getStatus().equals("success")){
                                         SharedPreferences preferences = getSharedPreferences(Code.pref_id, 0);
                                         SharedPreferences.Editor editor = preferences.edit();
-                                        editor.putString(Code.pref_user_id, userid).apply();
+                                        editor.putString(Code.pref_user_id, userid).putString(Code.pref_token, item.getToken()).apply();
 
                                         Toast.makeText(LoginActivity.this, "로그인", Toast.LENGTH_SHORT).show();
 

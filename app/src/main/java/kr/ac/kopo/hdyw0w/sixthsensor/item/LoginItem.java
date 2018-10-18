@@ -8,7 +8,15 @@ public class LoginItem {
     private String status;
 
     @SerializedName("data")
-    private Data data;
+    private LoginData data;
+
+    public LoginData getData() {
+        return data;
+    }
+
+    public void setData(LoginData data) {
+        this.data = data;
+    }
 
     public String getStatus() {
         return status;
@@ -18,26 +26,33 @@ public class LoginItem {
         this.status = status;
     }
 
-    public Data getData() {
-        return data;
+    public String getToken() {
+        return data.getUser().getToken();
     }
 
-    public void setData(Data data) {
-        this.data = data;
-    }
 }
 
-class Data {
+class LoginData {
+
     @SerializedName("user")
     private User user;
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
 
 class User {
 
     @SerializedName("userid")
     private String userid;
+
     @SerializedName("username")
     private String username;
+
     @SerializedName("token")
     private String token;
 

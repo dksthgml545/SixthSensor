@@ -41,14 +41,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="그룹 추가" />
+            android:text="장소 추가" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fil_fab1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            app:fabSize="mini"
+            app:fabSize="normal"
             app:srcCompat="@drawable/ic_addgroup" />
     </LinearLayout>
 
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            app:fabSize="mini"
+            app:fabSize="normal"
             app:srcCompat="@drawable/ic_modify" />
     </LinearLayout>
 

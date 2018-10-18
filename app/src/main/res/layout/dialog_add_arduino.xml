@@ -39,7 +39,7 @@
             android:textSize="20dp"
             android:textColor="@color/colorDefault"
             android:layout_gravity="center"
-            android:id="@+id/daa_arduiniId"
+            android:id="@+id/daa_arduinoId"
             />
     </LinearLayout>
 
@@ -48,8 +48,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="5"
-        android:paddingVertical="5dp"
-        >
+        android:paddingVertical="5dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -67,7 +66,7 @@
             android:paddingHorizontal="10dp"
             android:background="@drawable/rounded_border_edittext"
             android:id="@+id/daa_arduinoName"
-            />
+            android:textColor="#000000"/>
     </LinearLayout>
 
     <LinearLayout
@@ -82,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:layout_gravity="center"
-            android:text="센서 거리"
+            android:text="센서 범위"
             android:textStyle="bold"
             android:textSize="21sp"
             android:textColor="@color/colorDefault"
@@ -106,8 +105,12 @@
             app:np_textSize="15sp"
             app:np_value="10"
             app:np_fadingEdgeEnabled="false"
-            app:np_wrapSelectorWheel="true"
-            />
+            app:np_wrapSelectorWheel="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
 
     </LinearLayout>
 

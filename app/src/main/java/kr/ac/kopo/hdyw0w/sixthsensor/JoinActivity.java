@@ -127,12 +127,12 @@ public class JoinActivity extends AppCompatActivity {
                 // Retrofit 요청
                 Retrofit retrofit = RetrofitService.retrofit;
                 RetrofitService service = retrofit.create(RetrofitService.class);
-                service.users(id, name, passWd).enqueue(new Callback<ResponseBody>() {
+                service.users(id, name, passWd).enqueue(new Callback<JoinItem>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    public void onResponse(Call<JoinItem> call, Response<JoinItem> response) {
                         if (response.isSuccessful()) {
                             try {
-                                JSONObject object = new JSONObject(response.body().string());
+                                JSONObject object = new JSONObject(response.body().toString());
                                 if (object.has("status")) {
                                     String result = object.getString("status");
                                     if (result.equals("success")) {
@@ -143,14 +143,14 @@ public class JoinActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 }
-                            } catch (JSONException | IOException e) {
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    public void onFailure(Call<JoinItem> call, Throwable t) {
                         Log.e("Retrofit", t.getMessage(), t);
                     }
                 });

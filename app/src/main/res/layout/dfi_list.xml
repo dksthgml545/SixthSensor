@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="3"
+    android:layout_margin="20dp"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_trash_can"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="우리공원 휴지통"
+            android:textStyle="bold"
+            android:textColor="@color/colorDefault"
+            android:layout_marginTop="10dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_trash_can"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="우리공원 휴지통"
+            android:textStyle="bold"
+            android:textColor="@color/colorDefault"
+            android:layout_marginTop="10dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_trash_can"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="우리공원 휴지통"
+            android:textStyle="bold"
+            android:textColor="@color/colorDefault"
+            android:layout_marginTop="10dp"
+            />
+    </LinearLayout>
+
+
+
+
+</GridLayout>

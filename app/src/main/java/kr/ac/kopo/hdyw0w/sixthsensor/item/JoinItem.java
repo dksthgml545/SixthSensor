@@ -6,50 +6,79 @@ import com.google.gson.annotations.SerializedName;
 
 public class JoinItem {
 
+    @SerializedName("status")
+    private String status;
+
+    @SerializedName("data")
+    private data data;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public kr.ac.kopo.hdyw0w.sixthsensor.item.data getData() {
+        return data;
+    }
+
+    public void setData(kr.ac.kopo.hdyw0w.sixthsensor.item.data data) {
+        this.data = data;
+    }
+}
+
+class data {
+
+    @SerializedName("user")
+    private user user;
+
+    public kr.ac.kopo.hdyw0w.sixthsensor.item.user getUser() {
+        return user;
+    }
+
+    public void setUser(kr.ac.kopo.hdyw0w.sixthsensor.item.user user) {
+        this.user = user;
+    }
+}
+
+class user {
+
     @SerializedName("userid")
     private String userid;
 
     @SerializedName("username")
     private String username;
 
-    @SerializedName("password")
-    private String password;
+    @SerializedName("token")
+    private String token;
 
-    @SerializedName("status")
-    private String status;
+//    @SerializedName("password")
+//    private String password;
 
-    // Setter
-    public void setUsername(String username){
-        this.username = username;
-    }
 
-    public void setUser_id(String userid){
-        this.userid = userid;
-    }
-
-    public void setPassword(String password){
-        this.password = password;
-    }
-
-    public void setStatus(String status){
-        this.status = status;
-    }
-
-    // Getter
-    public String getUsername(){
-        return username;
-    }
-
-    public String getUserid(){
+    public String getUserid() {
         return userid;
     }
 
-    public String getPassword(){
-        return password;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
-    public String getStatus() {
-        return status;
+    public String getUsername() {
+        return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

@@ -43,55 +43,56 @@ public class ChangePassActivity extends AppCompatActivity {
                 }
         );
 
-        findViewById(R.id.dpc_btnSubmit).setOnClickListener(
-                new Button.OnClickListener(){
-                    public void onClick(View v){
-                        String curpwd = passwd.getText().toString();
-                        String newpwd = newpasswd.getText().toString();
-                        String repwd = repasswd.getText().toString();
-
-                        if (curpwd.length() == 0 || newpwd.length() == 0 || repwd.length() == 0){
-                            Toast.makeText(ChangePassActivity.this, "모든 항목을 입력해주세요", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        SharedPreferences preferences = getSharedPreferences(Code.pref_id, 0);
-                        String username = preferences.getString(Code.pref_user_id, "");
-
-                        Toast.makeText(ChangePassActivity.this, "username : " + username, Toast.LENGTH_SHORT).show();
-
-
-                        Retrofit retrofit = RetrofitService.retrofit;
-                        RetrofitService service = retrofit.create(RetrofitService.class);
-                        service.password(username, curpwd, newpwd).enqueue(new Callback<PassChItem>() {
-                            @Override
-                            public void onResponse(Call<PassChItem> call, Response<PassChItem> response) {
-                                if (response.isSuccessful()) {
-                                    PassChItem item = response.body();
-                                    assert item != null;
-
-                                    if (item.getStatus().equals("OK")){
-                                        Toast.makeText(ChangePassActivity.this, "비밀번호가 변경되었습니다", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-
-                                } else {
-                                    Toast.makeText(ChangePassActivity.this, "response not successful", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<PassChItem> call, Throwable t) {
-                                Toast.makeText(ChangePassActivity.this, "onFailure", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }
-        );
+//        findViewById(R.id.dpc_btnSubmit).setOnClickListener(
+//                new Button.OnClickListener(){
+//                    public void onClick(View v){
+//                        String password = passwd.getText().toString();
+//                        String newpassword = newpasswd.getText().toString();
+//                        String repassword = repasswd.getText().toString();
+//                        String token =
+//
+//                        if (password.length() == 0 || newpassword.length() == 0 || repassword.length() == 0){
+//                            Toast.makeText(ChangePassActivity.this, "모든 항목을 입력해주세요", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//
+//                        SharedPreferences preferences = getSharedPreferences(Code.pref_id, 0);
+//                        String username = preferences.getString(Code.pref_user_id, "");
+//
+//                        Toast.makeText(ChangePassActivity.this, "username : " + username, Toast.LENGTH_SHORT).show();
+//
+//
+//                        Retrofit retrofit = RetrofitService.retrofit;
+//                        RetrofitService service = retrofit.create(RetrofitService.class);
+//                        service.password(token, password, newpassword).enqueue(new Callback<PassChItem>() {
+//                            @Override
+//                            public void onResponse(Call<PassChItem> call, Response<PassChItem> response) {
+//                                if (response.isSuccessful()) {
+//                                    PassChItem item = response.body();
+//                                    assert item != null;
+//
+//                                    if (item.getStatus().equals("OK")){
+//                                        Toast.makeText(ChangePassActivity.this, "비밀번호가 변경되었습니다", Toast.LENGTH_SHORT).show();
+//                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                        startActivity(intent);
+//                                        finish();
+//                                    }
+//
+//                                } else {
+//                                    Toast.makeText(ChangePassActivity.this, "response not successful", Toast.LENGTH_SHORT).show();
+//                                    finish();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<PassChItem> call, Throwable t) {
+//                                Toast.makeText(ChangePassActivity.this, "onFailure", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    }
+//                }
+//        );
 
         repasswd.addTextChangedListener(new TextWatcher() {
             @Override
