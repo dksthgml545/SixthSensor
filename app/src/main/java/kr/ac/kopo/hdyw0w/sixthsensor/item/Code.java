@@ -5,8 +5,10 @@ public class Code {
     public static final String pref_id = "userid";
     public static final String pref_user_id = "userid";
     public static final String pref_token = "token";
+    public static final String pref_sId = "sensorId";
     public static final String pref_sensorId = "sensorId";
     public static final String pref_sensorName = "sensorName";
-    public static final int pref_measRange= Integer.parseInt("measRange");
+    public static final String pref_measRange= "measRange";
+    public static final String pref_deviceName= "deviceName";
 
 }

@@ -49,6 +49,7 @@
         android:orientation="horizontal"
         android:weightSum="5"
         android:paddingVertical="5dp">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -57,8 +58,8 @@
             android:textSize="21sp"
             android:textStyle="bold"
             android:textColor="@color/colorDefault"
-            android:layout_gravity="center"
-            />
+            android:layout_gravity="center" />
+
         <EditText
             android:layout_width="0dp"
             android:layout_height="35dp"

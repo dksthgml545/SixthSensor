@@ -12,9 +12,13 @@ public class DeviceItem {
     @SerializedName("data")
     private DeviceData data;
 
+    @SerializedName("token")
+    private String token;
+
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -25,6 +29,14 @@ public class DeviceItem {
 
     public void setData(DeviceData data) {
         this.data = data;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public ArrayList<Regsensors> getUnregSensors() {
@@ -103,50 +115,4 @@ class Device {
     }
 }
 
-class regSensors {
-
-    @SerializedName("sensorId")
-    public String sensorId;
-
-    @SerializedName("sensorName")
-    public String sensorName;
-
-    @SerializedName("sensorType")
-    public String sensorType;
-
-    @SerializedName("measRange")
-    public String measRange;
-
-    public String getSensorId() {
-        return sensorId;
-    }
-
-    public void setSensorId(String sensorId) {
-        this.sensorId = sensorId;
-    }
-
-    public String getSensorName() {
-        return sensorName;
-    }
-
-    public void setSensorName(String sensorName) {
-        this.sensorName = sensorName;
-    }
-
-    public String getSensorType() {
-        return sensorType;
-    }
-
-    public void setSensorType(String sensorType) {
-        this.sensorType = sensorType;
-    }
-
-    public String getMeasRange() {
-        return measRange;
-    }
-
-    public void setMeasRange(String measRange) {
-        this.measRange = measRange;
-    }
-}
 

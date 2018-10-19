@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="280dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="@color/colorBackground"
-    >
+    android:background="@color/colorBackground" >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -21,6 +20,7 @@
             android:text="우리공원 쓰레기통"
             android:textColor="@color/colorDefault"
             android:textStyle="bold"
+            android:id="@+id/dfi_bin_name"
             />
         <Button
             android:layout_width="45dp"
@@ -30,24 +30,27 @@
             android:textStyle="bold"
             android:textColor="#f4f4f4"
             android:background="@drawable/rounded_border_button"
+            android:id="@+id/dfi_btn_edit"
             />
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
+        android:id="@+id/dfi_rcv">
 
-        >
     </android.support.v7.widget.RecyclerView>
 
     <Button
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/ic_cancel"
         android:backgroundTint="#777"
-        />
+        android:id="@+id/dfi_btn_close"/>
 
 </LinearLayout>

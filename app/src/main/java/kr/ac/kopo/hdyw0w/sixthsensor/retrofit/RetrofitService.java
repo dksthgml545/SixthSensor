@@ -1,5 +1,6 @@
 package kr.ac.kopo.hdyw0w.sixthsensor.retrofit;
 
+import kr.ac.kopo.hdyw0w.sixthsensor.item.AddDeviceItem;
 import kr.ac.kopo.hdyw0w.sixthsensor.item.DeviceItem;
 import kr.ac.kopo.hdyw0w.sixthsensor.item.JoinItem;
 import kr.ac.kopo.hdyw0w.sixthsensor.item.LoginItem;
@@ -42,9 +43,14 @@ public interface RetrofitService {
 
     // 장치이름 (아두이노 설정)
     @GET("devices/{deviceId}")
-    Call<DeviceItem> sensor (
+    Call<AddDeviceItem> sensor (
+            @Header("x-auth") String token,
+            @Path("deviceId") String deviceId,
+            @Field("deviceName") String deviceName,
             @Path("sensorName") String sensorName,
-            @Path("measRange") int measRange
+            @Path("measRange") int measRange,
+            @Path("sensorId") String sensorId,
+            @Path("sensors") String sensors
     );
 
     // 로그인

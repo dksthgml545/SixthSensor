@@ -7,10 +7,10 @@ import java.util.ArrayList;
 public class AddDeviceItem {
 
     @SerializedName("deviceName")
-    public String deviceName;
+    private String deviceName;
 
     @SerializedName("sensors")
-    private ArrayList<sensors> sensors;
+    public ArrayList<Sensors> sensors;
 
     @SerializedName("status")
     private String status;
@@ -24,12 +24,12 @@ public class AddDeviceItem {
         this.deviceName = deviceName;
     }
 
-    public ArrayList<kr.ac.kopo.hdyw0w.sixthsensor.item.sensors> getSensors() {
+    public ArrayList<kr.ac.kopo.hdyw0w.sixthsensor.item.Sensors> getSensors() {
         return sensors;
     }
 
-    public void setSensors(ArrayList<kr.ac.kopo.hdyw0w.sixthsensor.item.sensors> sensors) {
-        this.sensors = sensors;
+    public void setSensors(ArrayList<kr.ac.kopo.hdyw0w.sixthsensor.item.Sensors> Sensors) {
+        this.sensors = Sensors;
     }
 
     public String getStatus() {
@@ -41,12 +41,11 @@ public class AddDeviceItem {
     }
 
     public String getSensorId() { return sensors.get(0).getSensorId();}
-    public String getSensorName() { return sensors.get(1).getSensorName();}
-    public int getMeasRange() { return sensors.get(2).getMeasRange();}
-
+    public String getSensorName() { return sensors.get(0).getSensorName();}
+    public int getMeasRange() { return sensors.get(0).getMeasRange();}
 }
 
-class sensors {
+class Sensors {
 
     @SerializedName("sensorId")
     private String sensorId;

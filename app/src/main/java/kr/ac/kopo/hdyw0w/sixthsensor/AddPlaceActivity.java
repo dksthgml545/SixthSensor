@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -72,7 +71,6 @@ public class AddPlaceActivity extends AppCompatActivity {
         registerView.setAdapter(registAdapter);
 
         final EditText placeName = (EditText) findViewById(R.id.gaa_placeName);
-        final TextView placeNameConfirm = (TextView) findViewById(R.id.gaa_tvPlaceNameConfirm);
         final EditText raspberryId = (EditText) findViewById(R.id.gaa_raspberryId);
 
         Button btnLookUp = (Button) findViewById(R.id.gaa_btLookup);
@@ -107,10 +105,10 @@ public class AddPlaceActivity extends AppCompatActivity {
                 new Button.OnClickListener(){
                     public void onClick(View v){
 
-                        Retrofit retrofit = RetrofitService.retrofit;
-                        RetrofitService service = retrofit.create(RetrofitService.class);
                         deviceId = raspberryId.getText().toString();
                         String token = getSharedPreferences(Code.pref_id, 0).getString(Code.pref_token, "");
+                        Retrofit retrofit = RetrofitService.retrofit;
+                        RetrofitService service = retrofit.create(RetrofitService.class);
                         service.device(token, deviceId).enqueue(new Callback<DeviceItem>() {
 
                             @Override
@@ -207,6 +205,10 @@ public class AddPlaceActivity extends AppCompatActivity {
                                                         if (object.has("status")) {
                                                             String result = object.getString("status");
                                                             if (result.equals("success")) {
+
+//                                                                SharedPreferences preferences = getSharedPreferences(Code.pref_sensorId, 0);
+//                                                                SharedPreferences.Editor editor = preferences.edit();
+//                                                                editor.putString(Code.pref_sensorId, 0).putString(Code.pref_token, item.getToken()).apply();
 
                                                                 // 확인시 처리 로직
                                                                 Toast.makeText(AddPlaceActivity.this, "저장했습니다", Toast.LENGTH_SHORT).show();

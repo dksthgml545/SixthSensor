@@ -49,7 +49,11 @@ public class ListFragment extends Fragment implements NavActivity.onKeyBackPress
         placeListView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<PlaceListItem> placeListItemArrayList = new ArrayList<>();
-        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "우리공원 쓰레기통", 99, 10));
+        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "우리나라공원 쓰레기통", 99, 50));
+        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "만세공원 쓰레기통", 30, 10));
+        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "폴리텍공원 쓰레기통", 50, 30));
+        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "안성공원 쓰레기통", 20, 5));
+        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "하늘나라공원 쓰레기통", 10, 6));
 
         PlaceListAdapter placeListAdapter = new PlaceListAdapter(placeListItemArrayList);
 
@@ -111,7 +115,7 @@ public class ListFragment extends Fragment implements NavActivity.onKeyBackPress
 
         fil_fab.animate().rotationBy(45);
         fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
-        fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
+        fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_120));
 
     }
 

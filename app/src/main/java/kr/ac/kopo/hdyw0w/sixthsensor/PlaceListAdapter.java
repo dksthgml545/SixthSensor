@@ -2,6 +2,7 @@ package kr.ac.kopo.hdyw0w.sixthsensor;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -56,6 +57,13 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.View
             placeName = itemView.findViewById(R.id.fl_placeName);
             registCount = itemView.findViewById(R.id.fl_regist_count);
             fullCount = itemView.findViewById(R.id.fl_full_count);
+
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.getContext().startActivity(new Intent(v.getContext(), ListItemActivity.class));
+                }
+            });
 
         }
     }
