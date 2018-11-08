@@ -85,8 +85,8 @@
             android:text="센서 범위"
             android:textStyle="bold"
             android:textSize="21sp"
-            android:textColor="@color/colorDefault"
-            />
+            android:textColor="@color/colorDefault" />
+
         <com.shawnlin.numberpicker.NumberPicker
             android:id="@+id/daa_number_picker"
             android:layout_width="0dp"

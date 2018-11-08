@@ -1,7 +1,5 @@
-package kr.ac.kopo.hdyw0w.sixthsensor;
+package kr.ac.kopo.hdyw0w.sixthsensor.adapter;
 
-import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -13,15 +11,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import kr.ac.kopo.hdyw0w.sixthsensor.ListItemActivity;
+import kr.ac.kopo.hdyw0w.sixthsensor.R;
 import kr.ac.kopo.hdyw0w.sixthsensor.item.PlaceListItem;
 
 public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.ViewHolder> {
+
+    // 등록된 쓰레기
+    private TextView regist_count;
+    // 가득찬 쓰레기
+    private TextView full_count;
+    // 장소이름
+    private TextView placeName;
     
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fil_list, parent, false);
 
         return new ViewHolder(v);
@@ -52,6 +59,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             layout = itemView.findViewById(R.id.fl_layout);
             binIcon = itemView.findViewById(R.id.fl_bin_icon);
             placeName = itemView.findViewById(R.id.fl_placeName);
@@ -61,7 +69,10 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.View
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    v.getContext().startActivity(new Intent(v.getContext(), ListItemActivity.class));
+
+                    v.getContext().startActivity(new Intent(v.getContext(), ListItemActivity.class)
+                            .putExtra("sensors", placeListItemArrayList.get(getAdapterPosition()))
+                    );
                 }
             });
 
@@ -69,7 +80,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.View
     }
 
     private ArrayList<PlaceListItem> placeListItemArrayList;
-    PlaceListAdapter(ArrayList<PlaceListItem> placeListItemArrayList){
+    public PlaceListAdapter(ArrayList<PlaceListItem> placeListItemArrayList){
         this.placeListItemArrayList = placeListItemArrayList;
     }
 }

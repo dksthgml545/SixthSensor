@@ -1,11 +1,22 @@
 package kr.ac.kopo.hdyw0w.sixthsensor.item;
 
-public class PlaceListItem {
+import java.io.Serializable;
 
+public class PlaceListItem implements Serializable {
+
+    private String deviceId;
     private int drawableId;
     private String placeName;
     private int registCount;
     private int fullCount;
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public int getDrawableId() {
         return drawableId;
@@ -39,7 +50,8 @@ public class PlaceListItem {
         this.fullCount = fullCount;
     }
 
-    public PlaceListItem(int drawableId, String placeName, int registCount, int fullCount) {
+    public PlaceListItem(int drawableId, String deviceId, String placeName, int registCount, int fullCount) {
+        this.deviceId = deviceId;
         this.drawableId = drawableId;
         this.placeName = placeName;
         this.registCount = registCount;

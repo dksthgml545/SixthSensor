@@ -1,4 +1,4 @@
-package kr.ac.kopo.hdyw0w.sixthsensor;
+package kr.ac.kopo.hdyw0w.sixthsensor.adapter;
 
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import kr.ac.kopo.hdyw0w.sixthsensor.AddArduinoActivity;
+import kr.ac.kopo.hdyw0w.sixthsensor.AddPlaceActivity;
+import kr.ac.kopo.hdyw0w.sixthsensor.R;
+import kr.ac.kopo.hdyw0w.sixthsensor.item.Code;
 import kr.ac.kopo.hdyw0w.sixthsensor.item.UnregistItem;
 
 public class UnregistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -45,14 +49,16 @@ public class UnregistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    v.getContext().startActivity(new Intent(v.getContext(), AddArduinoActivity.class));
+                    ((AddPlaceActivity)v.getContext()).startActivityForResult(new Intent(v.getContext(), AddArduinoActivity.class).putExtra("sensor", unregistItemArrayList.get(getAdapterPosition()))
+                            , Code.REGISTER_REQUEST);
                 }
             });
         }
     }
 
     private ArrayList<UnregistItem> unregistItemArrayList;
-    UnregistAdapter(ArrayList<UnregistItem> unregistItemArrayList){
+
+    public UnregistAdapter(ArrayList<UnregistItem> unregistItemArrayList) {
         this.unregistItemArrayList = unregistItemArrayList;
     }
 

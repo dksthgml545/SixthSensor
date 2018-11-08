@@ -20,7 +20,7 @@
             android:text="우리공원 쓰레기통"
             android:textColor="@color/colorDefault"
             android:textStyle="bold"
-            android:id="@+id/dfi_bin_name"
+            android:id="@+id/dfi_place_name"
             />
         <Button
             android:layout_width="45dp"

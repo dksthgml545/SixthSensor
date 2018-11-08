@@ -1,6 +1,8 @@
 package kr.ac.kopo.hdyw0w.sixthsensor;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,14 +21,19 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import kr.ac.kopo.hdyw0w.sixthsensor.adapter.RegistAdapter;
+import kr.ac.kopo.hdyw0w.sixthsensor.adapter.UnregistAdapter;
 import kr.ac.kopo.hdyw0w.sixthsensor.item.Code;
 import kr.ac.kopo.hdyw0w.sixthsensor.item.DeviceItem;
-import kr.ac.kopo.hdyw0w.sixthsensor.item.RegistItem;
 import kr.ac.kopo.hdyw0w.sixthsensor.item.Regsensors;
+import kr.ac.kopo.hdyw0w.sixthsensor.item.Sensors;
 import kr.ac.kopo.hdyw0w.sixthsensor.item.UnregistItem;
+import kr.ac.kopo.hdyw0w.sixthsensor.item.UpdateSensors;
 import kr.ac.kopo.hdyw0w.sixthsensor.retrofit.RetrofitService;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,6 +58,9 @@ public class AddPlaceActivity extends AppCompatActivity {
     SharedPreferences setting;
     SharedPreferences.Editor editor;
 
+    private ArrayList<UnregistItem> unregistItemArrayList = new ArrayList<>();
+    private ArrayList<UnregistItem> registItemArrayList = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,17 +69,11 @@ public class AddPlaceActivity extends AppCompatActivity {
         registerView = findViewById(R.id.gaa_RCV_Registered);
         registerView.setHasFixedSize(true);
         registerView.setLayoutManager(new LinearLayoutManager(this));
+        registerView.setAdapter(new RegistAdapter(registItemArrayList));
 
         unregisterView = findViewById(R.id.gaa_RCV_Unregistered);
         unregisterView.setHasFixedSize(true);
         unregisterView.setLayoutManager(new LinearLayoutManager(this));
-
-        ArrayList<RegistItem> registItemArrayList = new ArrayList<>();
-        registItemArrayList.add(new RegistItem(R.drawable.ic_trash_can, "우리공원 중앙"));
-
-        RegistAdapter registAdapter = new RegistAdapter(registItemArrayList);
-
-        registerView.setAdapter(registAdapter);
 
         final EditText placeName = (EditText) findViewById(R.id.gaa_placeName);
         final EditText raspberryId = (EditText) findViewById(R.id.gaa_raspberryId);
@@ -81,7 +86,7 @@ public class AddPlaceActivity extends AppCompatActivity {
 
         final RecyclerView raspberryRegister = (RecyclerView) findViewById(R.id.gaa_RCV_Registered);
 
-        setting = getSharedPreferences("setting",0);
+        setting = getSharedPreferences("setting", 0);
         editor = setting.edit();
 
         raspberryRegister.setLayoutManager(new LinearLayoutManager(this));
@@ -89,7 +94,7 @@ public class AddPlaceActivity extends AppCompatActivity {
 
         Button button_all = (Button) findViewById(R.id.gaa_btLookup);
         button_all.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
+            public void onClick(View v) {
 
 //                rArrayList.clear();
 //                rAdapter.notifyDataSetChanged();
@@ -100,10 +105,14 @@ public class AddPlaceActivity extends AppCompatActivity {
         });
 
 
-
         btnLookUp.setOnClickListener(
-                new Button.OnClickListener(){
-                    public void onClick(View v){
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+
+                        // 키보드 숨기기
+                        InputMethodManager imm =
+                                (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(),0);
 
                         deviceId = raspberryId.getText().toString();
                         String token = getSharedPreferences(Code.pref_id, 0).getString(Code.pref_token, "");
@@ -114,37 +123,45 @@ public class AddPlaceActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<DeviceItem> call, Response<DeviceItem> response) {
 
-                                if (response.isSuccessful()){
+                                if (response.isSuccessful()) {
                                     DeviceItem item = response.body();
                                     assert item != null;
 
-                                    if (item.getStatus().equals("success")){
+                                    if (item.getStatus().equals("success")) {
+                                        unregistItemArrayList = new ArrayList<>();
+                                        registItemArrayList = new ArrayList<>();
 
-                                        ArrayList<UnregistItem> unregistItemArrayList = new ArrayList<>();
-
-                                        ArrayList<Regsensors> unRegDevices = item.getUnregSensors();
-
-                                            for (Regsensors device : unRegDevices ) {
-                                                unregistItemArrayList.add(new UnregistItem(R.drawable.ic_trash_can, device.getSensorId()));
+                                        if (item.getData().getDevice() != null ) {
+                                            ArrayList<Regsensors> regDevices = item.getData().getDevice().getRegSensors();
+                                            for (Regsensors device : regDevices) {
+                                                UnregistItem unregistItem = new UnregistItem(R.drawable.ic_trash_can_normal, device.getSensorId());
+                                                unregistItem.setArduinoName(device.getSensorName());
+                                                registItemArrayList.add(unregistItem);
                                             }
 
-//                                        unregistItemArrayList.add(new UnregistItem(R.drawable.ic_trash_can, "ar000007"));
-                                            UnregistAdapter unregistAdapter = new UnregistAdapter(unregistItemArrayList);
 
-                                            unregisterView.setAdapter(unregistAdapter);
+                                            ArrayList<Regsensors> unRegDevices = item.getData().getDevice().getUnregSensors();
+                                            for (Regsensors device : unRegDevices) {
+                                                unregistItemArrayList.add(new UnregistItem(R.drawable.ic_trash_can_normal, device.getSensorId()));
+                                            }
+
+//                                        unregistItemArrayList.add(new UnregistItem(R.drawable.ic_trash_can_normal, "ar000007"));
+                                            registerView.setAdapter(new RegistAdapter(registItemArrayList));
+                                            unregisterView.setAdapter(new UnregistAdapter(unregistItemArrayList));
+                                        }
 
                                     } else {
                                         Toast.makeText(AddPlaceActivity.this, "값이 존재하지않습니다! 다시 입력해주세요!", Toast.LENGTH_SHORT).show();
                                     }
-                                }  else {
+                                } else {
                                     Toast.makeText(AddPlaceActivity.this, "값이 존재하지않습니다. 다시 입력해주세요!!", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<DeviceItem> call, Throwable t) {
-                                Log.e("onFailure()",t.getMessage(),t);
-                                Toast.makeText(AddPlaceActivity.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+                                Log.e("onFailure()", t.getMessage(), t);
+                                Toast.makeText(AddPlaceActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -192,39 +209,46 @@ public class AddPlaceActivity extends AppCompatActivity {
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
 
+                                        ArrayList<Sensors> list = new ArrayList<>();
+                                        for (int i = 0; i < registItemArrayList.size(); i++) {
+                                            Sensors sensors = new Sensors();
+                                            UnregistItem item = registItemArrayList.get(i);
+                                            sensors.setMeasRange(item.getRange());
+                                            sensors.setSensorId(item.getArduinoId());
+                                            sensors.setSensorName(item.getArduinoName());
+
+                                            Log.e(TAG, "range : " + sensors.getMeasRange() + " id : " + sensors.getSensorId() + " name : " + sensors.getSensorName());
+
+                                            list.add(sensors);
+                                        }
+
+                                        UpdateSensors sensors = new UpdateSensors();
+                                        sensors.setDeviceName(placeName.getText().toString());
+                                        sensors.setSensors(list);
+
+                                        String token = getSharedPreferences(Code.pref_id, 0).getString(Code.pref_token, "");
                                         Retrofit retrofit = RetrofitService.retrofit;
                                         RetrofitService service = retrofit.create(RetrofitService.class);
-                                        service.place(deviceName).enqueue(new Callback<DeviceItem>() {
-
+                                        service.updateDevice(token, raspberryId.getText().toString(), sensors).enqueue(new Callback<ResponseBody>() {
                                             @Override
-                                            public void onResponse(Call<DeviceItem> call, Response<DeviceItem> response) {
-
-                                                if (response.isSuccessful()){
+                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                if (response.isSuccessful()) {
                                                     try {
-                                                        JSONObject object = new JSONObject(response.body().toString());
-                                                        if (object.has("status")) {
-                                                            String result = object.getString("status");
-                                                            if (result.equals("success")) {
-
-//                                                                SharedPreferences preferences = getSharedPreferences(Code.pref_sensorId, 0);
-//                                                                SharedPreferences.Editor editor = preferences.edit();
-//                                                                editor.putString(Code.pref_sensorId, 0).putString(Code.pref_token, item.getToken()).apply();
-
-                                                                // 확인시 처리 로직
-                                                                Toast.makeText(AddPlaceActivity.this, "저장했습니다", Toast.LENGTH_SHORT).show();
-                                                                finish();
-
-                                                            }
+                                                        JSONObject obj = new JSONObject(response.body().string());
+                                                        if (obj.has("status")) {
+                                                            Toast.makeText(AddPlaceActivity.this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
+                                                            finish();
                                                         }
-                                                    } catch (JSONException e) {
+                                                    } catch (JSONException | IOException e) {
                                                         e.printStackTrace();
                                                     }
-                                                }
+                                                } else
+                                                    Toast.makeText(AddPlaceActivity.this, "다시 시도해주세요", Toast.LENGTH_SHORT).show();
                                             }
 
                                             @Override
-                                            public void onFailure(Call<DeviceItem> call, Throwable t) {
-                                                Log.e("ERROR",t.getMessage(),t);
+                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                                Toast.makeText(AddPlaceActivity.this, "다시 시도해주세요", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }
@@ -238,5 +262,27 @@ public class AddPlaceActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Code.REGISTER_REQUEST: {
+                    UnregistItem item = (UnregistItem) data.getSerializableExtra("sensor");
+                    for (int i = 0; i < unregistItemArrayList.size(); i++) {
+                        String id = unregistItemArrayList.get(i).getArduinoId();
+                        if (id.equals(item.getArduinoId())) {
+                            unregistItemArrayList.remove(i);
+                            registItemArrayList.add(item);
+                        }
+                    }
+                    registerView.setAdapter(new RegistAdapter(registItemArrayList));
+                    unregisterView.setAdapter(new UnregistAdapter(unregistItemArrayList));
+                    break;
+                }
+            }
+        }
     }
 }

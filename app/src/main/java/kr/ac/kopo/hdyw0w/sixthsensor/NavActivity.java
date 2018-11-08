@@ -10,6 +10,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import kr.ac.kopo.hdyw0w.sixthsensor.item.Code;
+
 public class NavActivity extends AppCompatActivity {
 
     private final int LIST_FRAGMENT = 0;
@@ -23,6 +27,9 @@ public class NavActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_activity);
+
+        FirebaseMessaging.getInstance().subscribeToTopic(getSharedPreferences(Code.pref_id, 0).getString(Code.pref_user_id, ""));
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
 
@@ -82,7 +89,7 @@ public class NavActivity extends AppCompatActivity {
             mOnKeyBackPressedListener.onBack();
         } else {
 //            super.onBackPressed();
-        backPressCloseHandler.onBackPressed();
+             backPressCloseHandler.onBackPressed();
         }
     }
 }

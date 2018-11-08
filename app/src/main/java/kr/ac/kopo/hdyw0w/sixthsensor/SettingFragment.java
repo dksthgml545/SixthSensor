@@ -14,6 +14,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.Objects;
+
+import kr.ac.kopo.hdyw0w.sixthsensor.item.Code;
+
 public class SettingFragment extends Fragment implements View.OnClickListener {
     public static SettingFragment newInstance() {
         SettingFragment fragment = new SettingFragment();
@@ -24,7 +28,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,8 +45,18 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.fis_logoutTv :
-                Intent intent_act = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent_act);
+                new AlertDialog.Builder(getContext()).setIcon(R.mipmap.ic_launcher).setTitle("로그아웃")
+                        .setMessage("로그아웃 하시겠습니까?")
+                        .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Objects.requireNonNull(getContext()).getSharedPreferences(Code.pref_id, 0).edit().clear().apply();
+
+                                Intent intent_act = new Intent(getContext(), LoginActivity.class);
+                                startActivity(intent_act);
+                                ((NavActivity)Objects.requireNonNull(getContext())).finish();
+                            }
+                        }).setNegativeButton("아니오", null).show();
                 break;
             case R.id.fis_passChTv :
                 Intent intent_act1 = new Intent(getContext(), ChangePassActivity.class);
@@ -58,13 +72,13 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 new AlertDialog.Builder(getContext()).setIcon(R.mipmap.ic_launcher).setTitle("회원탈퇴")
                         .setView(input)
                         .setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "탈퇴 되었습니다, 안녕 :)", Toast.LENGTH_SHORT).show();
-                        Intent intent_act2 = new Intent(getContext(), LoginActivity.class);
-                        startActivity(intent_act2);
-                    }
-                }).setNegativeButton("아니오", null).setMessage("\n회원탈퇴시, 저장된 모든 데이터가 삭제되어 복구가 불가능합니다.\n정말 탈퇴하시겠습니까 ?\n\n비밀번호 입력 ")
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getContext(), "탈퇴 되었습니다, 안녕 :)", Toast.LENGTH_SHORT).show();
+                                Intent intent_act2 = new Intent(getContext(), LoginActivity.class);
+                                startActivity(intent_act2);
+                            }
+                        }).setNegativeButton("아니오", null).setMessage("\n회원탈퇴시, 저장된 모든 데이터가 삭제되어 복구가 불가능합니다.\n정말 탈퇴하시겠습니까 ?\n\n비밀번호 입력 ")
                         .show();
                 break;
         }

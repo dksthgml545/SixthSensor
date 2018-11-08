@@ -40,12 +40,12 @@ public class LoginActivity extends AppCompatActivity {
         final EditText userId = (EditText) findViewById(R.id.la_edUserID);
         final EditText userPassWd = (EditText) findViewById(R.id.la_edPassword);
 
-        setting = getSharedPreferences("setting",0);
+        setting = getSharedPreferences(Code.pref_id,0);
         editor = setting.edit();
 
         if (setting.getBoolean("autoCheckbox",true)){
-            userId.setText(setting.getString("ID",""));
-            userPassWd.setText(setting.getString("PW",""));
+            userId.setText(setting.getString(Code.pref_user_id,""));
+            userPassWd.setText(setting.getString(Code.pref_user_passwd,""));
             autoCheckbox.setChecked(true);
         }
 
@@ -73,10 +73,10 @@ public class LoginActivity extends AppCompatActivity {
                             String ID = userId.getText().toString();
                             String PW = userPassWd.getText().toString();
 
-                            editor.putString("ID",ID);
-                            editor.putString("PW",PW);
+                            editor.putString(Code.pref_user_id,ID);
+                            editor.putString(Code.pref_user_passwd,PW);
                             editor.putBoolean("autoCheckbox",true);
-                            editor.commit();
+                            editor.apply();
 
                         } else {
                             editor.clear();

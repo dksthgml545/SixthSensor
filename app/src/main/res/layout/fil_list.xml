@@ -59,8 +59,8 @@
                     android:textStyle="bold"
                     android:text="30"
                     android:textSize="20sp"
-                    android:id="@+id/fl_regist_count"
-                    />
+                    android:id="@+id/fl_regist_count" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -68,16 +68,16 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:weightSum="5"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:textStyle="bold"
                     android:text="가득찬 쓰레기통 : "
-                    android:textSize="20sp"
-                    />
+                    android:textSize="20sp"/>
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -85,8 +85,8 @@
                     android:textStyle="bold"
                     android:text="30"
                     android:textSize="20sp"
-                    android:id="@+id/fl_full_count"
-                    />
+                    android:id="@+id/fl_full_count" />
+
             </LinearLayout>
 
 
@@ -108,8 +108,7 @@
             android:textStyle="bold"
             android:textSize="23sp"
             android:textColor="@color/colorDefault"
-            android:id="@+id/fl_placeName"
-            />
+            android:id="@+id/fl_placeName" />
 
     </LinearLayout>
 

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import kr.ac.kopo.hdyw0w.sixthsensor.item.Code;
+
 public class SplashActivity extends AppCompatActivity {
 
     /** 로딩 화면이 떠있는 시간(밀리초단위)  **/
@@ -22,9 +24,17 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 /* 메뉴액티비티를 실행하고 로딩화면을 죽인다.*/
-                Intent mainIntent = new Intent(SplashActivity.this,LoginActivity.class);
-                SplashActivity.this.startActivity(mainIntent);
-                SplashActivity.this.finish();
+
+                if (getSharedPreferences(Code.pref_id, 0).getString(Code.pref_token, "").length() > 1) {
+                    Intent mainIntent = new Intent(SplashActivity.this, NavActivity.class);
+                    SplashActivity.this.startActivity(mainIntent);
+                    SplashActivity.this.finish();
+                } else {
+                    Intent mainIntent = new Intent(SplashActivity.this,LoginActivity.class);
+                    SplashActivity.this.startActivity(mainIntent);
+                    SplashActivity.this.finish();
+                }
+
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

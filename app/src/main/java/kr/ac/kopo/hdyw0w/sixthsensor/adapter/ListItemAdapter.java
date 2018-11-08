@@ -1,4 +1,4 @@
-package kr.ac.kopo.hdyw0w.sixthsensor;
+package kr.ac.kopo.hdyw0w.sixthsensor.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import kr.ac.kopo.hdyw0w.sixthsensor.item.DfiListItem;
+import kr.ac.kopo.hdyw0w.sixthsensor.R;
+import kr.ac.kopo.hdyw0w.sixthsensor.item.Sensors;
 
 public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHolder> {
     @NonNull
@@ -24,14 +25,14 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
     public void onBindViewHolder(@NonNull ListItemAdapter.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
 
-        viewHolder.binIcon.setImageResource(dfiListItemArrayList.get(position).getDrawableId());
-        viewHolder.binName.setText(dfiListItemArrayList.get(position).getItemName());
+        viewHolder.binIcon.setImageResource(sensorsArrayList.get(position).getDrawableId());
+        viewHolder.binName.setText(sensorsArrayList.get(position).getSensorName());
 
     }
 
     @Override
     public int getItemCount() {
-        return dfiListItemArrayList.size();
+        return sensorsArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -46,9 +47,9 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
         }
     }
 
-    private ArrayList<DfiListItem> dfiListItemArrayList;
+    private ArrayList<Sensors> sensorsArrayList;
 
-    ListItemAdapter(ArrayList<DfiListItem> dfiListItemArrayList) {
-        this.dfiListItemArrayList = dfiListItemArrayList;
+    public ListItemAdapter(ArrayList<Sensors> sensorsArrayList) {
+        this.sensorsArrayList = sensorsArrayList;
     }
 }

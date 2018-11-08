@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1018252665377",
+    "firebase_url": "https://sixthsensor-a48b9.firebaseio.com",
+    "project_id": "sixthsensor-a48b9",
+    "storage_bucket": "sixthsensor-a48b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018252665377:android:6e872cb34cbd24bb",
+        "android_client_info": {
+          "package_name": "kr.ac.kopo.hdyw0w.sixthsensor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018252665377-qebcvoa4p3pjhicus3acd6bv48kfqpfb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFq96qmSEIfu06nBBSQUvfVe5rO8-IGkc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

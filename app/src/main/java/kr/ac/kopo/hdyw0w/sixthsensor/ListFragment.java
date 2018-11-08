@@ -16,7 +16,16 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import kr.ac.kopo.hdyw0w.sixthsensor.adapter.PlaceListAdapter;
+import kr.ac.kopo.hdyw0w.sixthsensor.item.AllDeviceListItem;
+import kr.ac.kopo.hdyw0w.sixthsensor.item.Code;
+import kr.ac.kopo.hdyw0w.sixthsensor.item.Devices;
 import kr.ac.kopo.hdyw0w.sixthsensor.item.PlaceListItem;
+import kr.ac.kopo.hdyw0w.sixthsensor.retrofit.RetrofitService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ListFragment extends Fragment implements NavActivity.onKeyBackPressedListener {
 
@@ -49,11 +58,6 @@ public class ListFragment extends Fragment implements NavActivity.onKeyBackPress
         placeListView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<PlaceListItem> placeListItemArrayList = new ArrayList<>();
-        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "우리나라공원 쓰레기통", 99, 50));
-        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "만세공원 쓰레기통", 30, 10));
-        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "폴리텍공원 쓰레기통", 50, 30));
-        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "안성공원 쓰레기통", 20, 5));
-        placeListItemArrayList.add(new PlaceListItem(R.drawable.ic_trash_can, "하늘나라공원 쓰레기통", 10, 6));
 
         PlaceListAdapter placeListAdapter = new PlaceListAdapter(placeListItemArrayList);
 
@@ -77,19 +81,12 @@ public class ListFragment extends Fragment implements NavActivity.onKeyBackPress
             }
         });
 
-        fabBGLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeFABMenu();
-            }
-        });
-
         fil_fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent_act = new Intent(getContext(), AddPlaceActivity.class);
-                startActivity(intent_act);
+                Intent intent1 = new Intent(getContext(), AddPlaceActivity.class);
+                startActivity(intent1);
 
             }
         });
@@ -103,7 +100,74 @@ public class ListFragment extends Fragment implements NavActivity.onKeyBackPress
             }
         });
 
+        requestNet();
+
+        hideFAB();
+
         return view;
+    }
+
+    private void requestNet() {
+        Retrofit retrofit = RetrofitService.retrofit;
+        RetrofitService service = retrofit.create(RetrofitService.class);
+        String token = getContext().getSharedPreferences(Code.pref_id, 0).getString(Code.pref_token, "");
+        service.getAllDevices(token).enqueue(new Callback<AllDeviceListItem>() {
+            @Override
+            public void onResponse(Call<AllDeviceListItem> call, Response<AllDeviceListItem> response) {
+                if (response.isSuccessful()) {
+                    AllDeviceListItem item = response.body();
+                    ArrayList<Devices> list = item.getData().getDevices();
+
+                    ArrayList<PlaceListItem> placeListItemArrayList = new ArrayList<>();
+
+                    for (Devices device : list) {
+
+                        if (device.getErrSensorsCnt() == 0 ) {
+                            PlaceListItem placeListItem = new PlaceListItem(R.drawable.ic_trash_can_normal, device.getDeviceId(), device.getDeviceName(), device.getTotalSensorsCnt(), device.getErrSensorsCnt());
+                            placeListItemArrayList.add(placeListItem);
+                        } else {
+                            PlaceListItem placeListItem = new PlaceListItem(R.drawable.ic_trash_can_err, device.getDeviceId(), device.getDeviceName(), device.getTotalSensorsCnt(), device.getErrSensorsCnt());
+                            placeListItemArrayList.add(placeListItem);
+                        }
+
+                    }
+
+                    placeListView.setAdapter(new PlaceListAdapter(placeListItemArrayList));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<AllDeviceListItem> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void hideFAB() {
+
+        placeListView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if (dy > 0 ||dy<0 && fil_fab.isShown())
+                {
+                    fil_fab.hide();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+            {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                {
+                    fil_fab.show();
+                }
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
     }
 
     private void showFABMenu() {
@@ -111,47 +175,45 @@ public class ListFragment extends Fragment implements NavActivity.onKeyBackPress
         isFABOpen = true;
         fabLayout1.setVisibility(View.VISIBLE);
         fabLayout2.setVisibility(View.VISIBLE);
-        fabBGLayout.setVisibility(View.VISIBLE);
 
         fil_fab.animate().rotationBy(45);
-        fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
-        fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_120));
+        fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_65));
+        fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_130));
 
     }
 
     private void closeFABMenu(){
 
-            isFABOpen = false;
-            fabBGLayout.setVisibility(View.GONE);
-            fil_fab.animate().rotationBy(-45);
-            fabLayout1.animate().translationY(0);
-            fabLayout2.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+        isFABOpen = false;
+        fil_fab.animate().rotationBy(-45);
+        fabLayout1.animate().translationY(0);
+        fabLayout2.animate().translationY(0).setListener(new Animator.AnimatorListener() {
 
-                @Override
-                public void onAnimationStart(Animator animator) {
+            @Override
+            public void onAnimationStart(Animator animator) {
 
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                if (!isFABOpen) {
+                    fabLayout1.setVisibility(View.GONE);
+                    fabLayout2.setVisibility(View.GONE);
                 }
 
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    if (!isFABOpen) {
-                        fabLayout1.setVisibility(View.GONE);
-                        fabLayout2.setVisibility(View.GONE);
-                    }
+            }
 
-                }
+            @Override
+            public void onAnimationCancel(Animator animator) {
 
-                @Override
-                public void onAnimationCancel(Animator animator) {
+            }
 
-                }
+            @Override
+            public void onAnimationRepeat(Animator animator) {
 
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-
-                }
-            });
-        }
+            }
+        });
+    }
 
     @Override
     public void onBack() {
@@ -196,4 +258,3 @@ public class ListFragment extends Fragment implements NavActivity.onKeyBackPress
         Log.e("ListFragment", "onStop()");
     }
 }
-

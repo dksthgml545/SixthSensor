@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,7 +13,7 @@
         android:id="@+id/fabBGLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="@color/colorTransBg"
+        android:background="@color/colorTransBg"
         android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
@@ -31,8 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginRight="@dimen/standard_23"
-        android:layout_marginBottom="@dimen/standard_23"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
         android:clipToPadding="false"
         android:gravity="center_vertical"
         android:padding="@dimen/standard_12"
@@ -41,7 +39,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="장소 추가" />
+            android:text="장소 추가"
+            android:layout_marginRight="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/rounded_border_button"
+            android:backgroundTint="@color/cardview_dark_background"
+            android:padding="5dp"
+            />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fil_fab1"
@@ -57,8 +62,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginRight="@dimen/standard_23"
-        android:layout_marginBottom="@dimen/standard_23"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
         android:clipToPadding="false"
         android:gravity="center_vertical"
         android:padding="@dimen/standard_12"
@@ -67,7 +72,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="편집" />
+            android:text="편집"
+            android:layout_marginRight="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/rounded_border_button"
+            android:backgroundTint="@color/cardview_dark_background"
+            android:padding="5dp"
+            />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fil_fab2"
@@ -101,4 +113,3 @@
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
-

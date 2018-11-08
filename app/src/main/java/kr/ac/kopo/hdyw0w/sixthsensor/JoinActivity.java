@@ -27,6 +27,11 @@ import retrofit2.Retrofit;
 
 public class JoinActivity extends AppCompatActivity {
 
+    private String username = null;
+    private String userid = null;
+    private String password = null;
+    private String passwordConfirm = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,29 @@ public class JoinActivity extends AppCompatActivity {
         Button btnSubmit = (Button) findViewById(R.id.ja_btnSubmit);
         Button btnlogin = (Button) findViewById(R.id.ja_btnlogin);
 
+        username.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String nameInput = username.getText().toString();
+                String confirm = passwordConfirm.getText().toString();
+
+
+
+            }
+        });
+
         // 비밀번호 재확인
         passwordConfirm.addTextChangedListener(new TextWatcher() {
             @Override
@@ -49,6 +77,11 @@ public class JoinActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
                 String passwordInput = password.getText().toString();
                 String confirm = passwordConfirm.getText().toString();
@@ -66,11 +99,6 @@ public class JoinActivity extends AppCompatActivity {
                     return;
                 }
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
         });
 
         btnSubmit.setOnClickListener(new Button.OnClickListener() {
@@ -78,10 +106,14 @@ public class JoinActivity extends AppCompatActivity {
 
                 final String name = username.getText().toString();
                 final String id = userid.getText().toString();
-                String passWd = password.getText().toString();
+                final String passWd = password.getText().toString();
 
                 // 최소 글자수 제한
                 EditText passwordLength = (EditText) findViewById(R.id.ja_password);
+
+                EditText idLength = (EditText) findViewById(R.id.ja_user_id);
+
+
 
                 // 이름 입력 확인
                 if (name.length() == 0) {
@@ -97,6 +129,11 @@ public class JoinActivity extends AppCompatActivity {
                     return;
                 }
 
+                if (idLength.getText().length() < 4) {
+                    Toast.makeText(getApplicationContext(), "아이디를 4자리 이상으로 입력해주세요! ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // 비밀번호 입력 확인
                 if (passWd.length() == 0) {
                     Toast.makeText(JoinActivity.this, "비밀번호를 입력해주세요!", Toast.LENGTH_SHORT).show();
@@ -105,8 +142,8 @@ public class JoinActivity extends AppCompatActivity {
                 }
 
                 // password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                if (passwordLength.getText().length() < 10) {
-                    Toast.makeText(getApplicationContext(), "비밀번호를 10자리 이상으로 입력해주세요! ", Toast.LENGTH_SHORT).show();
+                if (passwordLength.getText().length() < 8) {
+                    Toast.makeText(getApplicationContext(), "비밀번호를 8자리 이상으로 입력해주세요! ", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -127,13 +164,19 @@ public class JoinActivity extends AppCompatActivity {
                 // Retrofit 요청
                 Retrofit retrofit = RetrofitService.retrofit;
                 RetrofitService service = retrofit.create(RetrofitService.class);
-                service.users(id, name, passWd).enqueue(new Callback<JoinItem>() {
+                service.user(id, name, passWd).enqueue(new Callback<JoinItem>() {
                     @Override
                     public void onResponse(Call<JoinItem> call, Response<JoinItem> response) {
                         if (response.isSuccessful()) {
                             try {
                                 JSONObject object = new JSONObject(response.body().toString());
                                 if (object.has("status")) {
+
+                                    Intent intent_action = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent_action);
+
+                                    Toast.makeText(JoinActivity.this, "회원가입이 완료되었습니다!", Toast.LENGTH_SHORT).show();
+
                                     String result = object.getString("status");
                                     if (result.equals("success")) {
                                         Intent intent_act = new Intent(getApplicationContext(), LoginActivity.class);

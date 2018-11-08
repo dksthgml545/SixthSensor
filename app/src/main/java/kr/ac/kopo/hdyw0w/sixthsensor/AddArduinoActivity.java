@@ -1,7 +1,7 @@
 package kr.ac.kopo.hdyw0w.sixthsensor;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -9,40 +9,42 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import kr.ac.kopo.hdyw0w.sixthsensor.item.AddDeviceItem;
-import kr.ac.kopo.hdyw0w.sixthsensor.item.Code;
-import kr.ac.kopo.hdyw0w.sixthsensor.item.DeviceItem;
-import kr.ac.kopo.hdyw0w.sixthsensor.item.RegistItem;
-import kr.ac.kopo.hdyw0w.sixthsensor.item.Regsensors;
-import kr.ac.kopo.hdyw0w.sixthsensor.item.Sensors;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import kr.ac.kopo.hdyw0w.sixthsensor.item.UnregistItem;
 
 public class AddArduinoActivity extends AppCompatActivity {
 
-    private NumberPicker picker;
+    private UnregistItem item;
 
-    private EditText arduinoname;
-//    private TextView arduinoid;
+    private final static String TAG = AddArduinoActivity.class.getSimpleName();
+
+    private int value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_add_arduino);
 
+        item = (UnregistItem) getIntent().getSerializableExtra("sensor");
+        Log.e(TAG, "item : " + item);
+        Log.e(TAG, "id : " + item.getArduinoId());
+
         final com.shawnlin.numberpicker.NumberPicker picker = (com.shawnlin.numberpicker.NumberPicker) findViewById(R.id.daa_number_picker);
         final EditText arduinoname = (EditText) findViewById(R.id.daa_arduinoName);
+        final TextView arduinoId = (TextView) findViewById(R.id.daa_arduinoId);
+        arduinoId.setText(item.getArduinoId());
+
         final Button cancel = (Button) findViewById(R.id.daa_btnCancel);
         final Button submit = (Button) findViewById(R.id.daa_btnSubmit);
+
+        picker.setOnValueChangedListener(new com.shawnlin.numberpicker.NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(com.shawnlin.numberpicker.NumberPicker picker, int oldVal, int newVal) {
+                value = newVal;
+            }
+        });
 
         cancel.setOnClickListener(
                 new Button.OnClickListener() {
@@ -66,85 +68,26 @@ public class AddArduinoActivity extends AppCompatActivity {
 
         );
 
-        submit.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
+        submit.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
 
-                        if (arduinoname.length() == 0) {
-                            Toast.makeText(AddArduinoActivity.this, "장치 이름을 입력해주세요!", Toast.LENGTH_SHORT).show();
-                            arduinoname.requestFocus();
-                            return;
-                        }
+                if (arduinoname.length() == 0) {
+                    Toast.makeText(AddArduinoActivity.this, "장치 이름을 입력해주세요!", Toast.LENGTH_SHORT).show();
+                    arduinoname.requestFocus();
+                    return;
+                }
 
-                        new AlertDialog.Builder(AddArduinoActivity.this).setTitle("저장");
-                        new AlertDialog.Builder(AddArduinoActivity.this).setMessage("저장하시겠습니까?");
-                        new AlertDialog.Builder(AddArduinoActivity.this).setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
+                final String sensorName = arduinoname.getText().toString();
+                int pickedValue = picker.getValue();
 
-//                                        Retrofit retrofit = RetrofitService.retrofit;
-//                                        RetrofitService service = retrofit.create(RetrofitService.class);
-                                        final String sensorName = arduinoname.getText().toString();
-//                                        final String deviceName = placename.getText().toString();
-                                        String token = getSharedPreferences(Code.pref_id,0).getString(Code.pref_token,"");
-                                        int pickedValue = picker.getValue();
-                                        int measRange = pickedValue;
-                                        service.sensor(token,sensorName, measRange).enqueue(new Callback<AddDeviceItem>() {
+                item.setArduinoName(sensorName);
+                item.setRange(pickedValue);
+                Intent intent = new Intent();
+                intent.putExtra("sensor", item);
+                setResult(RESULT_OK, intent);
+                finish();
 
-                                            @Override
-                                            public void onResponse(Call<AddDeviceItem> call, Response<AddDeviceItem> response) {
-
-                                                if (response.isSuccessful()) {
-                                                    AddDeviceItem Additem = response.body();
-                                                    assert Additem != null;
-
-                                                    if (Additem.getStatus().equals("success")) {
-                                                        SharedPreferences pref = getSharedPreferences(Code.pref_sId, 0);
-                                                        SharedPreferences.Editor edit = pref.edit();
-                                                        edit.putString(Code.pref_sensorId, Additem.getSensorId()).apply();
-                                                        edit.putString(Code.pref_sensorName, Additem.getSensorName()).apply();
-                                                        edit.putInt(Code.pref_measRange, Additem.getMeasRange()).apply();
-                                                        // 저장완료
-                                                        edit.commit();
-
-
-
-                                                        ArrayList<RegistItem> registItemArrayList = new ArrayList<>();
-
-                                                        ArrayList<Regsensors> regsensors = Additem.getSensors();
-
-                                                    }
-
-                                                    try {
-                                                        JSONObject object = new JSONObject(response.body().toString());
-                                                        if (object.has("status")) {
-                                                            String result = object.getString("status");
-                                                            if (result.equals("success")) {
-
-                                                                // 확인시 처리 로직
-                                                                Toast.makeText(AddArduinoActivity.this, "저장했습니다", Toast.LENGTH_SHORT).show();
-                                                                finish();
-
-                                                            }
-                                                        }
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<AddDeviceItem> call, Throwable t) {
-                                                Log.e("ERROR", t.getMessage(), t);
-                                            }
-                                        });
-
-
-                                    }
-                                }
-                        );
-
-
-                    }
-                });
+            }
+        });
     }
 }

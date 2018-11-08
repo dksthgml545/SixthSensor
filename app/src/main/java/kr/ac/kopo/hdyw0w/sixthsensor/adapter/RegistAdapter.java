@@ -1,6 +1,5 @@
-package kr.ac.kopo.hdyw0w.sixthsensor;
+package kr.ac.kopo.hdyw0w.sixthsensor.adapter;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import kr.ac.kopo.hdyw0w.sixthsensor.item.RegistItem;
+import kr.ac.kopo.hdyw0w.sixthsensor.R;
+import kr.ac.kopo.hdyw0w.sixthsensor.item.UnregistItem;
 
 public class RegistAdapter extends RecyclerView.Adapter<RegistAdapter.ViewHolder> {
 
@@ -58,8 +58,8 @@ public class RegistAdapter extends RecyclerView.Adapter<RegistAdapter.ViewHolder
         }
     }
 
-    private ArrayList<RegistItem> registItemArrayList;
-    RegistAdapter(ArrayList<RegistItem> registItemArrayList){
+    private ArrayList<UnregistItem> registItemArrayList;
+    public RegistAdapter(ArrayList<UnregistItem> registItemArrayList){
         this.registItemArrayList = registItemArrayList;
     }
 }
